@@ -23,6 +23,8 @@
 #include <sys/select.h>
 #include <cutils/log.h>
 #include <linux/input.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "SensorBase.h"
 

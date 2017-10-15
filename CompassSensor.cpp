@@ -18,6 +18,8 @@
 #define LOG_NDEBUG 0
 
 #include <cutils/log.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "CompassSensor.h"
 #include "MPLSupport.h"
