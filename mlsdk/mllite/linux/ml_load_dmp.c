@@ -245,7 +245,7 @@ static const unsigned char dmpMemory[DMP_CODE_SIZE] = {
 inv_error_t inv_write_dmp_data(FILE *fd, const unsigned char *dmp, size_t len)
 {
     inv_error_t result = INV_SUCCESS;
-    int bytesWritten = 0;
+    size_t bytesWritten = 0;
    
     if (len <= 0) {
         MPL_LOGE("Nothing to write");

@@ -121,12 +121,8 @@ MPLSensor::MPLSensor(CompassSensor *compass)
     VFUNC_LOG;
 
     inv_error_t rv;
-    int i, fd;
-    char *port = NULL;
+    int fd;
     char *ver_str;
-    unsigned long mSensorMask;
-    int res;
-    FILE *fptr;
 
     mCompassSensor = compass;
 
@@ -497,7 +493,7 @@ void MPLSensor::inv_set_device_properties()
 
 void MPLSensor::loadDMPTap()
 {
-    int res, fd;
+    int fd;
     FILE *fptr;
 
     /* load DMP firmware */
@@ -865,7 +861,7 @@ void MPLSensor::computeLocalSensorMask(int enabled_sensors)
     } while (0);
 }
 
-int MPLSensor::enableSensors(unsigned long sensors, int en)
+int MPLSensor::enableSensors(unsigned long sensors, __attribute__ ((unused)) int en)
 {
     VFUNC_LOG;
 
@@ -1096,7 +1092,6 @@ int MPLSensor::enable(int32_t handle, int en)
 
     pthread_mutex_lock(&mMplMutex);
     if ((uint32_t(newState) << what) != (mEnabled & (1 << what))) {
-        uint32_t sensor_type;
         short flags = newState;
         mEnabled &= ~(1 << what);
         mEnabled |= (uint32_t(flags) << what);
@@ -1207,7 +1202,6 @@ int MPLSensor::update_delay()
     VHANDLER_LOG;
 
     int res = 0;
-    int64_t got;
 
     if (mEnabled) {
         uint64_t wanted = -1LLU;
@@ -1274,12 +1268,6 @@ int MPLSensor::update_delay()
             /* TODO: use function pointers to calculate delay value specific to vendor */
             res = writeAccelFifoRate(wanted);
         }
-
-        unsigned long sensors = mLocalSensorMask & mMasterSensorMask;
-        unsigned long mask = (INV_THREE_AXIS_GYRO | INV_THREE_AXIS_ACCEL);
-        if (mCompassSensor != NULL)
-//            mask |= (INV_THREE_AXIS_COMPASS * mCompassSensor->isIntegrated());
-            mask |= INV_THREE_AXIS_COMPASS;
     }
     return res;
 }
@@ -1292,7 +1280,6 @@ int MPLSensor::update_delay()
  */
 int MPLSensor::lpa_delay_enable(unsigned long us)
 {
-    unsigned long attr;
     int fd;
     int err = 0;
 
@@ -1326,7 +1313,6 @@ int MPLSensor::setLpaDelay(unsigned long us)
  */
 int MPLSensor::motion_detect_enable(bool enable)
 {
-    unsigned long attr;
     unsigned char thr;
     int fd;
     int err = 0;
@@ -1564,9 +1550,6 @@ int MPLSensor::executeOnData(sensors_event_t* data, int count)
 int MPLSensor::readEvents(sensors_event_t *data, int count)
 {
     VHANDLER_LOG;
-
-    int i;
-    inv_error_t res;
 
     if (count < 1)
         return -EINVAL;
@@ -1930,10 +1913,9 @@ int MPLSensor::inv_init_sysfs_attributes(void)
     VFUNC_LOG;
 
     unsigned char i = 0;
-    char sysfs_path[MAX_SYSFS_NAME_LEN], tbuf[2];
+    char sysfs_path[MAX_SYSFS_NAME_LEN];
     char *sptr;
     char **dptr;
-    int num;
 
     sysfs_names_ptr =
             (char*)malloc(sizeof(char[MAX_SYSFS_ATTRB][MAX_SYSFS_NAME_LEN]));

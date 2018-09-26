@@ -126,7 +126,7 @@ int CompassSensor::readSample(long *data, int64_t *timestamp)
 {
     VHANDLER_LOG;
 
-    int numEventReceived = 0, done = 0;
+    int done = 0;
 
     ssize_t n = mInputReader.fill(data_fd);
     if (n < 0) {

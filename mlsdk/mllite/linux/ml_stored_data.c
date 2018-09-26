@@ -334,7 +334,7 @@ inv_error_t inv_load_cal_V0(unsigned char *calData, size_t len)
  *
  *  @return INV_SUCCESS if successful, a non-zero error code otherwise.
  */
-inv_error_t inv_load_cal_V1(unsigned char *calData, size_t len)
+inv_error_t inv_load_cal_V1(__attribute__ ((unused)) unsigned char *calData, __attribute__ ((unused)) size_t len)
 {
     return INV_SUCCESS;
 }
@@ -402,7 +402,7 @@ inv_error_t inv_load_cal(unsigned char *calData)
  *
  *  @return INV_SUCCESS if successful, a non-zero error code otherwise.
  */
-inv_error_t inv_store_cal(unsigned char *calData, size_t length)
+inv_error_t inv_store_cal(unsigned char *calData, __attribute__ ((unused)) size_t length)
 {
     inv_error_t res = 0;
     size_t size;

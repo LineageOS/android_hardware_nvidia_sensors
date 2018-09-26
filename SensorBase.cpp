@@ -77,7 +77,7 @@ int SensorBase::getFd() const
     return data_fd;
 }
 
-int SensorBase::setDelay(int32_t handle, int64_t ns)
+int SensorBase::setDelay(__attribute__ ((unused)) int32_t handle, __attribute__ ((unused)) int64_t ns)
 {
     return 0;
 }
@@ -138,7 +138,7 @@ int SensorBase::openInput(const char *inputName)
     return fd;
 }
 
-int SensorBase::enable(int32_t handle, int enabled)
+int SensorBase::enable(__attribute__ ((unused)) int32_t handle, __attribute__ ((unused)) int enabled)
 {
     return 0;
 }

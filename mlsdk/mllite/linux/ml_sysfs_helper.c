@@ -104,7 +104,8 @@ static int parsing_proc_input(int mode, char *name){
 	char line[4096], d;
 	char tmp[100];
 	FILE *fp;
-	int i, j, result, find_flag;
+	unsigned int i, j;
+	int result, find_flag;
 	int event_number = -1;
 	int input_number = -1;
 
@@ -212,7 +213,7 @@ static int parsing_proc_input(int mode, char *name){
 
 }
 static void init_iio() {
-	int i, j;
+	unsigned int i, j;
 	char iio_chip[10];
 	int dev_num;
 	for(j=0; j< CHIP_NUM; j++) {
